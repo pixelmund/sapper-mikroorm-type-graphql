@@ -1,0 +1,28 @@
+mutation Login($input: UserInput!) {
+  login(input: $input) {
+    success
+    user {
+      id
+      confirmed
+      email
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
+mutation Register($input: UserInput!) {
+  register(input: $input) {
+    success
+    user {
+      id
+      confirmed
+      email
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
