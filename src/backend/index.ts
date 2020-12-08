@@ -3,9 +3,10 @@ import path from "path";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { Resolvers } from "./resolvers";
+import { authChecker } from "./utils/authChecker";
 
 export const createApolloServer = async (): Promise<ApolloServer> => {
-	const schema = await buildSchema({ resolvers: Resolvers, emitSchemaFile: path.resolve(__dirname, '..', '..','..', 'schema.gql') });
+	const schema = await buildSchema({ resolvers: Resolvers, authChecker, emitSchemaFile: path.resolve(__dirname, '..', '..','..', 'schema.gql') });
 
 	const apolloServer = new ApolloServer({
 		schema,

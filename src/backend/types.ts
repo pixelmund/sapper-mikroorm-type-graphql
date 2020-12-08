@@ -1,6 +1,6 @@
 import type { ExpressContext } from "apollo-server-express/dist/ApolloServer";
 import { ObjectType, Field } from "type-graphql";
-import type { User } from "./db/entities/UserAndRelatedEntities";
+import type { User } from "./db/entities/User";
 
 export type Context = {
   ctx: ExpressContext,

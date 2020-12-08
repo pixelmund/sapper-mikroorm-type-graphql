@@ -10,8 +10,8 @@
   setClient(client);
 
   export let segment: string = "";
-  if (segment) {}
-  
+  if (segment) {
+  }
 </script>
 
 <slot />

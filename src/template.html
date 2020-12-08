@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html %svazzle.htmlAttributes% lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
 
-		%sapper.base%
+		%svazzle.base%
 
+		<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 		<link rel="stylesheet" href="global.css">
 		<link rel="manifest" href="manifest.json" />
 		<meta name="theme-color" content="#3F83F8">
@@ -13,21 +14,21 @@
 		<link rel="icon" type="image/png" href="favicon.png" />
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180.png">
 
-		<!-- Sapper generates a <style> tag containing critical CSS
+		<!-- Svazzle generates a <style> tag containing critical CSS
   		for the current page. CSS for the rest of the app is
   		lazily loaded when it precaches secondary pages -->
-		%sapper.styles%
+		%svazzle.styles%
 
 		<!-- This contains the contents of the <svelte:head> component, if
 		the current page has one -->
-		%sapper.head%
+		%svazzle.head%
 	</head>
 
-	<body class="antialiased dark:bg-gray-900">
-		<div id="sapper">
-			%sapper.html%
+	<body class="antialiased dark:bg-gray-900 text-primary">
+		<div id="svazzle">
+			%svazzle.html%
 		</div>
 
-		%sapper.scripts%
+		%svazzle.scripts%
 	</body>
 </html>

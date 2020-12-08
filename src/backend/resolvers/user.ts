@@ -1,7 +1,8 @@
 
 import { IsEmail } from "class-validator";
-import { Arg, createMethodDecorator, Field, FieldResolver, ForbiddenError, ID, InputType, Mutation, Query, Resolver, Root, UnauthorizedError } from "type-graphql";
-import { PasswordReset, User } from "../db/entities/UserAndRelatedEntities";
+import { Arg, createMethodDecorator, Field, FieldResolver, ForbiddenError, InputType, Mutation, Query, Resolver, Root, UnauthorizedError } from "type-graphql";
+import { PasswordReset } from "../db/entities/PasswordReset";
+import { User } from "../db/entities/User";
 import { em } from "../db/entityManager";
 
 /**

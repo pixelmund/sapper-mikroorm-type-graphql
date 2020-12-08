@@ -35,7 +35,6 @@ type PasswordReset {
   expiresAt: DateTime!
   id: ID!
   updatedAt: DateTime!
-  user: User!
 }
 
 type Query {

@@ -54,7 +54,6 @@ export type PasswordReset = {
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
   expiresAt: Scalars["DateTime"];
-  user: User;
 };
 
 export type Mutation = {
@@ -162,6 +161,13 @@ export type RegisterMutation = { __typename?: "Mutation" } & {
     };
 };
 
+export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
+
+export type LogoutMutation = { __typename?: "Mutation" } & Pick<
+  Mutation,
+  "logout"
+>;
+
 export const LoginDoc = gql`
   mutation Login($input: UserInput!) {
     login(input: $input) {
@@ -194,8 +200,16 @@ export const RegisterDoc = gql`
     }
   }
 `;
+export const LogoutDoc = gql`
+  mutation Logout {
+    logout
+  }
+`;
 export const Login = () =>
   mutation<LoginMutation, LoginMutationVariables>(LoginDoc);
 
 export const Register = () =>
   mutation<RegisterMutation, RegisterMutationVariables>(RegisterDoc);
+
+export const Logout = () =>
+  mutation<LogoutMutation, LogoutMutationVariables>(LogoutDoc);

@@ -11,9 +11,9 @@
     "sourceMap": true,
     "removeComments": true,
     "strict": true,
-    "types": ["svelte", "node", "@sapper"],
+    "types": ["svelte", "node"],
     "typeRoots": ["typings", "./node_modules/@types"]
   },
-  "include": ["src/**/*", "typings"],
-  "exclude": ["node_modules/*", "__sapper__/*", "static/*"]
+  "include": ["src/**/*", "typings", "src/node_modules/@svazzle"],
+  "exclude": ["node_modules/*", "__svazzle__/*", "static/*"]
 }

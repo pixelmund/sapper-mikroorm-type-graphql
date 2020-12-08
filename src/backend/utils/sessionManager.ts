@@ -23,7 +23,7 @@ export function sessionMiddleware(mikro: MikroORM) {
         saveUninitialized: false,
         unset: "destroy",
         secret: 'any secret',
-        store: new MikroStore({}, mikro.em)
+        store: new MikroStore({})
     }
   );
 }

@@ -9,7 +9,7 @@ import svelte from "rollup-plugin-svelte";
 import babel from "@rollup/plugin-babel";
 import colors from "kleur";
 import { terser } from "rollup-plugin-terser";
-import config from "sapper/config/rollup";
+import config from "svazzle/config/rollup";
 import pkg from "./package.json";
 
 const { createPreprocessors } = require("./svelte.config.js");
@@ -29,7 +29,7 @@ const warningIsIgnored = (warning) => warning.message.includes(
 ) || warning.message.includes("Circular dependency: node_modules") || warning.message.indexOf("export the package.json") !== -1;
 
 // Workaround for https://github.com/sveltejs/sapper/issues/1266
-const onwarn = (warning, _onwarn) => (warning.code === "CIRCULAR_DEPENDENCY" && /[/\\]@sapper[/\\]/.test(warning.message)) || warningIsIgnored(warning) || console.warn(warning.toString());
+const onwarn = (warning, _onwarn) => (warning.code === "CIRCULAR_DEPENDENCY" && /[/\\]@svazzle[/\\]/.test(warning.message)) || warningIsIgnored(warning) || console.warn(warning.toString());
 
 export default {
 	client: {

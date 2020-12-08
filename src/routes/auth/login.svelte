@@ -1,8 +1,21 @@
+<script context="module">
+  export const preload: Preload = async function preload(
+    _page,
+    session
+  ) {
+    unauthenticated(this, session.user);
+    return;
+  };
+</script>
+
 <script>
   import { Login } from "../../generated/graphql";
   import type { FormProps } from "svelte-forms-lib";
   import Field from "../../components/ui/forms/Field.svelte";
   import Form from "../../components/ui/forms/Form.svelte";
+  import type { Preload } from "@svazzle/common";
+  import { unauthenticated } from "../../utils/authenticated";
+  import SubmitButton from "../../components/ui/forms/SubmitButton.svelte";
 
   const signIn = Login();
 
@@ -29,7 +42,8 @@
         console.log(signUpResult.errors);
       }
       if (signUpResult.data && signUpResult.data.login.success) {
-        console.log(signUpResult.data);
+        // We reload to load the session
+        window.location.reload();
       }
     },
   };
@@ -37,19 +51,8 @@
 
 <Form
   {...formProps}
-  class="flex flex-col items-center mx-auto max-w-3xl w-full space-y-3"
-  let:formKey>
-  <Field
-    {formKey}
-    full
-    label="E-Mail"
-    name="email"
-    type="email" />
-  <Field
-    {formKey}
-    full
-    label="Passwort"
-    name="password"
-    type="password" />
-  <button type="submit">Submit</button>
+  class="mx-auto max-w-3xl w-full space-y-3">
+  <Field full label="E-Mail" name="email" type="email" />
+  <Field full label="Passwort" name="password" type="password" />
+  <SubmitButton>Sign in</SubmitButton>
 </Form>

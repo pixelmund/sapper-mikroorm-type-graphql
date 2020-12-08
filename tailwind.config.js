@@ -1,3 +1,4 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
 const { tailwindExtractor } = require("tailwindcss/lib/lib/purgeUnusedStyles");
 const colors = require("tailwindcss/colors");
 
@@ -22,9 +23,17 @@ module.exports = {
   },
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+      },
       colors: {
         gray: colors.trueGray,
       },
+      textColor: {
+        'primary': 'var(--text-primary)',
+        'full': 'var(--text-full)',
+        'muted': 'var(--text-muted)',
+      }
     },
   },
   variants: {

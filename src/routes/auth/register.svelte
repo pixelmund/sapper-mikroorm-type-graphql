@@ -1,25 +1,40 @@
+<script context="module">
+  export const preload: Preload = async function preload(
+    _page,
+    session
+  ) {
+    unauthenticated(this, session.user);
+    return;
+  };
+</script>
+
 <script>
   import { Register } from "../../generated/graphql";
-  import { createForm } from "svelte-forms-lib";
+  import type { FormProps } from "svelte-forms-lib";
+  import Field from "../../components/ui/forms/Field.svelte";
+  import Form from "../../components/ui/forms/Form.svelte";
+  import type { Preload } from "@svazzle/common";
+  import { unauthenticated } from "../../utils/authenticated";
+  import SubmitButton from "../../components/ui/forms/SubmitButton.svelte";
 
   const signUp = Register();
 
-  const {
-    form,
-    handleChange,
-    handleSubmit,
-    touched,
-    isValid,
-    errors,
-  } = createForm({
+  const formProps: FormProps = {
     initialValues: {
       email: "",
       password: "",
     },
-    onSubmit: async ({ email, password }) => {
-      if (!$isValid) {
-        return;
+    validate: (values) => {
+      let errors: any = {};
+      if (!values.email || values.email.length === 0) {
+        errors["email"] = "Required field";
       }
+      if (!values.password || values.password.length === 0) {
+        errors["password"] = "Required field";
+      }
+      return errors;
+    },
+    onSubmit: async ({ email, password }) => {
       const signUpResult = await signUp({
         variables: { input: { email, password } },
       });
@@ -27,30 +42,14 @@
         console.log(signUpResult.errors);
       }
       if (signUpResult.data && signUpResult.data.register.success) {
-        console.log(signUpResult.data);
+        // TODO: Show verification steps
       }
     },
-  });
-
-  $: console.log($touched);
+  };
 </script>
 
-<form
-  class="flex flex-col items-center mx-auto max-w-7xl w-full space-y-3"
-  on:submit={handleSubmit}>
-  <label for="email">Email</label>
-  <input
-    id="email"
-    name="email"
-    type="email"
-    on:change={handleChange}
-    bind:value={$form.email} />
-  <label for="password">Passwort</label>
-  <input
-    id="password"
-    name="password"
-    type="password"
-    on:change={handleChange}
-    bind:value={$form.password} />
-  <button type="submit">Submit</button>
-</form>
+<Form {...formProps} class="mx-auto max-w-3xl w-full space-y-3">
+  <Field full label="E-Mail" name="email" type="email" />
+  <Field full label="Passwort" name="password" type="password" />
+  <SubmitButton>Sign up</SubmitButton>
+</Form>
