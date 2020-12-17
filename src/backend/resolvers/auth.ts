@@ -214,8 +214,10 @@ export class AuthResolver {
     }
     pwresetRepo.remove(passwordReset);
     await passwordReset.user?.setPasswordHash(newPassword);
+    await em.flush();
     return {
       success: true,
+      user: passwordReset.user!
     };
   }
 

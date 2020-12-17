@@ -1,12 +1,23 @@
-import type { Role, User } from "../generated/graphql";
-import type { PreloadContext } from "../types";
+import type { User } from "../generated/graphql";
+import type { ClientRole, PreloadContext } from "../types";
 
 export const unauthenticated = (ctx: PreloadContext, user: User) => {
   if(!!user){
-    return ctx.redirect(302, '/')
+    ctx.redirect(302, '/')
+    return {};
   }
+  return {}
 }
 
-export const authenticated = (ctx: PreloadContext, role?: Role) => {
-    console.log(ctx);
+export const authenticated = (ctx: PreloadContext, user: User, roles?: ClientRole[]) => {
+  if(!!!user){
+    ctx.redirect(302, '/auth/login')
+    return {};
+  }
+  //@ts-ignore
+  if(!roles?.includes(user.role)){
+    ctx.redirect(302, '/')
+    return {};
+  }
+  return {};
 }

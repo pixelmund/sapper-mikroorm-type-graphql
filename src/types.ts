@@ -4,6 +4,12 @@ export type Test = {
   hello: string;
 };
 
+export enum ClientRole {
+  USER,
+  MODERATOR,
+  ADMIN,
+}
+
 export interface PreloadContext {
   fetch: (url: string, options?: any) => Promise<any>;
   error: (statusCode: number, message: Error | string) => void;

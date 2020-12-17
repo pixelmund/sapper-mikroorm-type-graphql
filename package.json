@@ -1,8 +1,8 @@
 {
-  "name": "sapper-typescript-graphql-template",
-  "description": "A template that includes Svelte with Sapper, TypeScript preprocessing, and a GraphQL server through TypeGraphQL",
+  "name": "svazzle-typescript-graphql-template",
+  "description": "A template that includes Svelte with svazzle, TypeScript preprocessing, and a GraphQL server through TypeGraphQL",
   "keywords": [
-    "sapper",
+    "svazzle",
     "typegraphql",
     "typescript",
     "eslint",
@@ -10,10 +10,10 @@
     "apollo-server",
     "graphql"
   ],
-  "homepage": "https://github.com/babichjacob/sapper-typescript-graphql-template",
+  "homepage": "https://github.com/babichjacob/svazzle-typescript-graphql-template",
   "repository": {
     "type": "git",
-    "url": "https://github.com/babichjacob/sapper-typescript-graphql-template.git"
+    "url": "https://github.com/babichjacob/svazzle-typescript-graphql-template.git"
   },
   "license": "MIT",
   "version": "2020.10.21",
@@ -22,13 +22,13 @@
     "eslint:fix": "eslint --fix ./*.js ./src/*.ts ./src/components/**/*.svelte ./src/graphql/**/*.ts ./src/routes/**/*.svelte ./src/routes/**/*.ts",
     "validate": "svelte-check --ignore src/node_modules/@svazzle",
     "validate:dev": "svelte-check --ignore src/node_modules/@svazzle --watch",
-    "sapper:dev": "svazzle dev",
-    "sapper:build": "cross-env NODE_ENV=production svazzle build",
-    "sapper:export": "cross-env NODE_ENV=production svazzle export --legacy",
-    "dev": "cross-env NODE_OPTIONS=--max_old_space_size=4096 run-p validate:dev sapper:dev",
-    "prod": "cross-env NODE_OPTIONS=--max_old_space_size=4096 run-s sapper:build validate",
-    "start": "cross-env NODE_OPTIONS=--max_old_space_size=4096 node __sapper__/build",
-    "export": "cross-env NODE_OPTIONS=--max_old_space_size=4096 run-s sapper:export validate",
+    "svazzle:dev": "svazzle dev",
+    "svazzle:build": "cross-env NODE_ENV=production svazzle build",
+    "svazzle:export": "cross-env NODE_ENV=production svazzle export --legacy",
+    "dev": "cross-env NODE_OPTIONS=--max_old_space_size=4096 run-p validate:dev svazzle:dev",
+    "prod": "cross-env NODE_OPTIONS=--max_old_space_size=4096 run-s svazzle:build validate",
+    "start": "cross-env NODE_OPTIONS=--max_old_space_size=4096 node __svazzle__/build",
+    "export": "cross-env NODE_OPTIONS=--max_old_space_size=4096 run-s svazzle:export validate",
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
@@ -95,7 +95,7 @@
     "rollup": "^2.34.2",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.2",
-    "sapper": "^0.28.10",
+    "svazzle": "^0.28.10",
     "svelte": "^3.31.0",
     "svelte-apollo": "^0.4.0",
     "svelte-check": "^1.1.19",

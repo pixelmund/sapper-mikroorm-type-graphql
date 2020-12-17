@@ -14,14 +14,17 @@
   import Field from "../../components/ui/forms/Field.svelte";
   import Form from "../../components/ui/forms/Form.svelte";
   import type { Preload } from "@svazzle/common";
+  import { stores } from "@svazzle/app";
   import { unauthenticated } from "../../utils/authenticated";
   import SubmitButton from "../../components/ui/forms/SubmitButton.svelte";
+
+  const { page } = stores()
 
   const signIn = Login();
 
   const formProps: FormProps = {
     initialValues: {
-      email: "",
+      email: $page.query.email ? $page.query.email : "",
       password: "",
     },
     validate: (values) => {

@@ -1,7 +1,5 @@
 <script context="module">
   import { client } from "../apolloClient";
-
-  export const preload = () => {};
 </script>
 
 <script>

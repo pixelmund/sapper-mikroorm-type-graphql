@@ -12,14 +12,14 @@ const main = async () => {
 
 	const pcss = await readFile("src/global.pcss");
 
-	const result = await postcss(postcssConfig.plugins).process(pcss, { from: "src/global.pcss", to: "static/global.css", map: sourcemap ? { inline: sourcemap === "inline" } : false });
+	const result = await postcss(postcssConfig.plugins).process(pcss, { from: "src/global.pcss", to: "static/static/global.css", map: sourcemap ? { inline: sourcemap === "inline" } : false });
 
-	await writeFile("static/global.css", result.css);
+	await writeFile("static/static/global.css", result.css);
 
-	if (result.map) await writeFile("static/global.css.map", result.map.toString());
+	if (result.map) await writeFile("static/static/global.css.map", result.map.toString());
 	else {
 		try {
-			await unlink("static/global.css.map");
+			await unlink("static/static/global.css.map");
 		} catch (err) {
 			if (err.code !== "ENOENT") {
 				throw err;

@@ -168,6 +168,69 @@ export type LogoutMutation = { __typename?: "Mutation" } & Pick<
   "logout"
 >;
 
+export type ConfirmEmailMutationVariables = Exact<{
+  confirmToken: Scalars["String"];
+}>;
+
+export type ConfirmEmailMutation = { __typename?: "Mutation" } & {
+  confirmUser: { __typename?: "AuthResponse" } & Pick<
+    AuthResponse,
+    "success"
+  > & {
+      errors?: Maybe<
+        Array<
+          { __typename?: "FieldErrors" } & Pick<
+            FieldErrors,
+            "field" | "message"
+          >
+        >
+      >;
+      user?: Maybe<{ __typename?: "User" } & Pick<User, "email">>;
+    };
+};
+
+export type ForgotPasswordMutationVariables = Exact<{
+  email: Scalars["String"];
+}>;
+
+export type ForgotPasswordMutation = { __typename?: "Mutation" } & {
+  forgotPassword: { __typename?: "AuthResponse" } & Pick<
+    AuthResponse,
+    "success"
+  > & {
+      errors?: Maybe<
+        Array<
+          { __typename?: "FieldErrors" } & Pick<
+            FieldErrors,
+            "field" | "message"
+          >
+        >
+      >;
+    };
+};
+
+export type ResetPasswordMutationVariables = Exact<{
+  id: Scalars["String"];
+  newPassword: Scalars["String"];
+}>;
+
+export type ResetPasswordMutation = { __typename?: "Mutation" } & {
+  resetPassword: { __typename?: "AuthResponse" } & Pick<
+    AuthResponse,
+    "success"
+  > & {
+      errors?: Maybe<
+        Array<
+          { __typename?: "FieldErrors" } & Pick<
+            FieldErrors,
+            "field" | "message"
+          >
+        >
+      >;
+      user?: Maybe<{ __typename?: "User" } & Pick<User, "email">>;
+    };
+};
+
 export const LoginDoc = gql`
   mutation Login($input: UserInput!) {
     login(input: $input) {
@@ -205,6 +268,45 @@ export const LogoutDoc = gql`
     logout
   }
 `;
+export const ConfirmEmailDoc = gql`
+  mutation ConfirmEmail($confirmToken: String!) {
+    confirmUser(confirmToken: $confirmToken) {
+      errors {
+        field
+        message
+      }
+      success
+      user {
+        email
+      }
+    }
+  }
+`;
+export const ForgotPasswordDoc = gql`
+  mutation ForgotPassword($email: String!) {
+    forgotPassword(email: $email) {
+      errors {
+        field
+        message
+      }
+      success
+    }
+  }
+`;
+export const ResetPasswordDoc = gql`
+  mutation ResetPassword($id: String!, $newPassword: String!) {
+    resetPassword(id: $id, newPassword: $newPassword) {
+      errors {
+        field
+        message
+      }
+      success
+      user {
+        email
+      }
+    }
+  }
+`;
 export const Login = () =>
   mutation<LoginMutation, LoginMutationVariables>(LoginDoc);
 
@@ -213,3 +315,18 @@ export const Register = () =>
 
 export const Logout = () =>
   mutation<LogoutMutation, LogoutMutationVariables>(LogoutDoc);
+
+export const ConfirmEmail = () =>
+  mutation<ConfirmEmailMutation, ConfirmEmailMutationVariables>(
+    ConfirmEmailDoc
+  );
+
+export const ForgotPassword = () =>
+  mutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(
+    ForgotPasswordDoc
+  );
+
+export const ResetPassword = () =>
+  mutation<ResetPasswordMutation, ResetPasswordMutationVariables>(
+    ResetPasswordDoc
+  );

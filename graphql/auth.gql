@@ -27,6 +27,42 @@ mutation Register($input: UserInput!) {
   }
 }
 
-mutation Logout{
+mutation Logout {
   logout
+}
+
+mutation ConfirmEmail($confirmToken: String!) {
+  confirmUser(confirmToken: $confirmToken) {
+    errors {
+      field
+      message
+    }
+    success
+    user {
+      email
+    }
+  }
+}
+
+mutation ForgotPassword($email: String!) {
+  forgotPassword(email: $email) {
+    errors {
+      field
+      message
+    }
+    success
+  }
+}
+
+mutation ResetPassword($id: String!, $newPassword: String!) {
+  resetPassword(id: $id, newPassword: $newPassword) {
+    errors {
+      field
+      message
+    }
+    success
+    user {
+      email
+    }
+  }
 }
