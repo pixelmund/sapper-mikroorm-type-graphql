@@ -14,8 +14,6 @@ import { PasswordReset } from "../db/entities/PasswordReset";
 import { User } from "../db/entities/User";
 import { em } from "../db/entityManager";
 import {
-  AUTH_COOKIE_NAME,
-  AUTH_COOKIE_VALUE,
   SESSION_NAME,
 } from "../../config";
 
@@ -111,12 +109,6 @@ export class AuthResolver {
     //@ts-ignore
     req.session.userId = user.id;
 
-    res.cookie(AUTH_COOKIE_NAME, AUTH_COOKIE_VALUE(user.role), {
-      httpOnly: false,
-      signed: false,
-      sameSite: "strict",
-    });
-
     await timeOut(500);
 
     return {
@@ -130,11 +122,6 @@ export class AuthResolver {
     //@ts-ignore
     req.session = null;
     res.cookie(SESSION_NAME, null, { maxAge: -1 });
-    res.cookie(AUTH_COOKIE_NAME, "0", {
-      httpOnly: false,
-      signed: false,
-      sameSite: "strict",
-    });
     return true;
   }
 

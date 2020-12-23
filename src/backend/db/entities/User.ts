@@ -4,9 +4,7 @@ import SecurePassword from "secure-password";
 import { registerEnumType, ObjectType, Field } from "type-graphql";
 import { Base } from "./Base";
 import { PasswordReset } from "./PasswordReset";
-import type { Post } from "./Post";
-import type { PostLike } from "./PostLike";
-import type { Follow } from "./Follow";
+import type { Answer } from "./Survey";
 
 const securePassword = new SecurePassword({
 	memlimit: SecurePassword.MEMLIMIT_DEFAULT,
@@ -76,7 +74,10 @@ export class User extends Base<User> {
 
     @Field(() => Boolean, { defaultValue: false })
     @Property({ default: false })
-    confirmed : boolean = false;
+	confirmed : boolean = false;
+	
+	@OneToMany('Answer', "user")
+	answers = new Collection<Answer>(this);
 
     @OneToMany(
     	() => PasswordReset,
@@ -84,16 +85,4 @@ export class User extends Base<User> {
     	{ cascade: [Cascade.ALL] },
     )
 	passwordResets = new Collection<PasswordReset>(this);
-	
-	@OneToMany('Post', 'user')
-	posts = new Collection<Post>(this);
-
-	@OneToMany('PostLike', 'fromUser')
-	likedPosts = new Collection<PostLike>(this);
-
-	@OneToMany('Follow', 'toUser')
-	follows = new Collection<Follow>(this)
-
-	@OneToMany('Follow', 'fromUser')
-	followed = new Collection<Follow>(this)
 }

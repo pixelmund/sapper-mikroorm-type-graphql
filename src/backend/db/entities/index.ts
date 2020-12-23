@@ -1,9 +1,7 @@
 import { Base } from "./Base";
 import { Session } from "./Session";
-import { Post } from "./Post";
 import { PasswordReset } from "./PasswordReset";
 import { User } from "./User";
-import { PostLike } from "./PostLike";
-import { Follow } from "./Follow";
+import { Answer, Category, Choice, Question, Survey, Action } from "./Survey";
 
-export const Entities = [Base, Session, PostLike, Follow, Post, PasswordReset, User];
+export const Entities = [Base, Session, PasswordReset, User, Survey, Category, Question, Answer, Choice, Action];

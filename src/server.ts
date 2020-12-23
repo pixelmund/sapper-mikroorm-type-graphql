@@ -20,16 +20,8 @@ const mode = process.env.NODE_ENV;
 const dev = mode === "development";
 
 interface LuutsRequest extends SvazzleRequest {
-  theme: "light" | "dark";
   user: User;
 }
-
-registerTemplateTransformer<LuutsRequest>((template, data) => {
-  return template.replace(
-    "%htmlattributes%",
-    `class='${data.req?.theme === "dark" ? "dark" : ""}'`
-  );
-});
 
 const createSvazzleAndApolloServer = async (
   graphqlPath: string
@@ -76,13 +68,6 @@ const createSvazzleAndApolloServer = async (
     if (!req.checkSession) {
       return next();
     }
-    let theme = "dark";
-    if (req.headers.cookie) {
-      const cookies = parse(req.headers.cookie);
-      theme = cookies?.[THEME_COOKIE_NAME] ?? "dark";
-    }
-    req.theme = theme;
-
     const userId = req?.session?.userId;
     if (!userId) {
       return next();
@@ -102,7 +87,6 @@ const createSvazzleAndApolloServer = async (
         if (!user) {
           return {
             user,
-            theme: req.theme,
           };
         }
         return {
@@ -111,7 +95,6 @@ const createSvazzleAndApolloServer = async (
             passwordHash: undefined,
             confirmToken: undefined,
           },
-          theme: req.theme,
         };
       },
     })
