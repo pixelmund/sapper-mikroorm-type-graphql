@@ -3,7 +3,6 @@ mutation Login($input: UserInput!) {
     success
     user {
       id
-      confirmed
       email
     }
     errors {
@@ -17,7 +16,6 @@ mutation Register($input: UserInput!) {
     success
     user {
       id
-      confirmed
       email
     }
     errors {
@@ -29,19 +27,6 @@ mutation Register($input: UserInput!) {
 
 mutation Logout {
   logout
-}
-
-mutation ConfirmEmail($confirmToken: String!) {
-  confirmUser(confirmToken: $confirmToken) {
-    errors {
-      field
-      message
-    }
-    success
-    user {
-      email
-    }
-  }
 }
 
 mutation ForgotPassword($email: String!) {

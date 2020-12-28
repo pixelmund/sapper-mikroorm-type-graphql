@@ -104,6 +104,10 @@ export class Question extends Base<Question> {
   @OneToMany(() => Answer, "question")
   answers = new Collection<Answer>(this);
 
+  @Field(() => [Action])
+  @OneToMany(() => Action, "question")
+  actions = new Collection<Action>(this);
+
   constructor(
     question: string,
     category: Reference<Category>,
@@ -124,6 +128,10 @@ export class Choice extends Base<Choice> {
   @Field()
   @Property()
   choice!: string;
+
+  @Field()
+  @Property({ nullable: true })
+  sortIndex?: number;
 
   @Field(() => Question)
   @ManyToOne(() => Question, "choices")
@@ -154,9 +162,13 @@ registerEnumType(ActionTypes, { name: "ActionTypes" });
 @ObjectType()
 @Entity()
 export class Action extends Base<Action> {
+  @Field(() => Question)
+  @ManyToOne(() => Question, "actions")
+  question!: IdentifiedReference<Question>;
+
   @Field(() => Choice)
   @ManyToOne(() => Choice, "actions")
-  choice!: Reference<Choice>;
+  choice!: IdentifiedReference<Choice>;
 
   @Field(() => ActionTypes)
   @Enum(() => ActionTypes)
@@ -179,14 +191,14 @@ export class Action extends Base<Action> {
 export class Answer extends Base<Answer> {
   @Field(() => Choice)
   @ManyToOne(() => Choice, "answers")
-  choice!: Reference<Choice>;
+  choice!: IdentifiedReference<Choice, 'id'>
 
   @Field(() => Question)
   @ManyToOne(() => Question, "answers")
-  question!: Reference<Question>;
+  question!: IdentifiedReference<Question, 'id'>;
 
   @ManyToOne("User", "answers")
-  user!: Reference<User>;
+  user!: IdentifiedReference<User, 'id'>;
 
   @Field(() => Survey)
   @ManyToOne(() => Survey, "answers")
@@ -201,7 +213,7 @@ export class Answer extends Base<Answer> {
     question: Reference<Question>,
     user: Reference<User>,
     survey: Reference<Survey>,
-    category: Reference<Category>,
+    category: Reference<Category>
   ) {
     super();
     this.choice = choice;

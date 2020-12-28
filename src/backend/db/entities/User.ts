@@ -22,7 +22,7 @@ registerEnumType(Role, { name: "Role" });
 @ObjectType()
 @Entity()
 export class User extends Base<User> {
-	constructor(email: string) {
+	constructor(email?: string) {
 		super();
 		this.email = email;
 	}
@@ -62,20 +62,13 @@ export class User extends Base<User> {
     @Enum({ default: Role.USER })
     role!: Role;
 
-    @Property({ type: BlobType, nullable: false })
+    @Property({ type: BlobType, nullable: true })
     passwordHash!: Buffer;
 
     @Field({ nullable: true })
-    @Property({ unique: true, nullable: false })
-    email!: string;
-
     @Property({ unique: true, nullable: true })
-    confirmToken?: string = uuid();
+    email?: string;
 
-    @Field(() => Boolean, { defaultValue: false })
-    @Property({ default: false })
-	confirmed : boolean = false;
-	
 	@OneToMany('Answer', "user")
 	answers = new Collection<Answer>(this);
 

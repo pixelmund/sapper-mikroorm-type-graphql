@@ -1,5 +1,5 @@
 <script context="module">
-  import { client } from "../apolloClient";
+  import client  from "../apolloClient";
 </script>
 
 <script>

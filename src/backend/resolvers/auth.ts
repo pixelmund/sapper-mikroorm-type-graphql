@@ -13,9 +13,7 @@ import { IsEmail, MinLength, MaxLength } from "class-validator";
 import { PasswordReset } from "../db/entities/PasswordReset";
 import { User } from "../db/entities/User";
 import { em } from "../db/entityManager";
-import {
-  SESSION_NAME,
-} from "../../config";
+import { SESSION_NAME } from "../../config";
 
 const timeOut = (timeout: number = 400) =>
   new Promise((resolve) => setTimeout(resolve, timeout));
@@ -77,18 +75,6 @@ export class AuthResolver {
           {
             field: "email",
             message: "No user with given email found.",
-          },
-        ],
-      };
-    }
-    if (!user.confirmed) {
-      return {
-        success: false,
-        errors: [
-          {
-            field: "user",
-            message:
-              "You need to confirm your email address before logging in.",
           },
         ],
       };
@@ -204,43 +190,7 @@ export class AuthResolver {
     await em.flush();
     return {
       success: true,
-      user: passwordReset.user!
-    };
-  }
-
-  @Mutation(() => AuthResponse)
-  async confirmUser(
-    @Arg("confirmToken") confirmToken: string
-  ): Promise<AuthResponse> {
-    const userRepo = em.getRepository(User);
-    const user = await userRepo.findOne({ confirmToken });
-    if (!user) {
-      return {
-        success: false,
-        errors: [
-          {
-            field: "confirmToken",
-            message:
-              "Cannot find a account associated with your confirmation token.",
-          },
-        ],
-      };
-    }
-    if (user.confirmed) {
-      return {
-        success: false,
-        errors: [
-          {
-            field: "confirmed",
-            message: "You cannot confirm your account twice.",
-          },
-        ],
-      };
-    }
-    user.confirmed = true;
-    await userRepo.persistAndFlush(user);
-    return {
-      success: true,
+      user: passwordReset.user!,
     };
   }
 }

@@ -1,0 +1,56 @@
+query TakeSurvey {
+  takeSurvey {
+    id
+    name
+    description
+    categories {
+      id
+      name
+      image
+      finished
+      questions {
+        id
+        question
+        choices {
+          id
+          choice
+          selected
+        }
+      }
+    }
+  }
+}
+
+query GetResult {
+  getResult {
+    level
+    value
+    categories {
+      key
+      value
+    }
+  }
+}
+
+query HasCompletedSurvey {
+  hasCompletedSurvey 
+}
+
+
+mutation SelectChoice(
+  $categoryId: String!
+  $surveyId: String!
+  $choiceId: String!
+  $questionId: String!
+) {
+  selectChoice(
+    categoryId: $categoryId
+    surveyId: $surveyId
+    choiceId: $choiceId
+    questionId: $questionId
+  ) {
+    id
+    choice
+    selected
+  }
+}

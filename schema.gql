@@ -3,10 +3,61 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Action {
+  choice: Choice!
+  createdAt: DateTime!
+  id: ID!
+  question: Question!
+  type: ActionTypes!
+  updatedAt: DateTime!
+  value: Float!
+}
+
+enum ActionTypes {
+  ADD
+  ENTRY
+  REDUCE
+}
+
+type Answer {
+  category: Category!
+  choice: Choice!
+  createdAt: DateTime!
+  id: ID!
+  question: Question!
+  survey: Survey!
+  updatedAt: DateTime!
+}
+
 type AuthResponse {
   errors: [FieldErrors!]
   success: Boolean!
   user: User
+}
+
+type Category {
+  answers: [Answer!]!
+  createdAt: DateTime!
+  finished: Boolean!
+  id: ID!
+  image: String
+  name: String!
+  published: Boolean
+  questions: [Question!]!
+  survey: Survey!
+  updatedAt: DateTime!
+}
+
+type Choice {
+  actions: [Action!]!
+  answers: [Answer!]!
+  choice: String!
+  createdAt: DateTime!
+  id: ID!
+  question: Question!
+  selected: Boolean!
+  sortIndex: Float!
+  updatedAt: DateTime!
 }
 
 """
@@ -19,14 +70,19 @@ type FieldErrors {
   message: String!
 }
 
+type KeyStringValueIntObjectType {
+  key: String!
+  value: Int!
+}
+
 type Mutation {
-  confirmUser(confirmToken: String!): AuthResponse!
   createUser(input: UserInputType!): User!
   forgotPassword(email: String!): AuthResponse!
   login(input: UserInput!): AuthResponse!
   logout: Boolean!
   register(input: UserInput!): AuthResponse!
   resetPassword(id: String!, newPassword: String!): AuthResponse!
+  selectChoice(categoryId: String!, choiceId: String!, questionId: String!, surveyId: String!): Choice
   updateUser(input: UserInputType!): User
 }
 
@@ -38,9 +94,31 @@ type PasswordReset {
 }
 
 type Query {
+  getResult: ResultResponseType
+  hasCompletedSurvey: Boolean!
   me: User
+  takeSurvey: Survey
   user(id: String!): User
   users: [User!]!
+}
+
+type Question {
+  actions: [Action!]!
+  answers: [Answer!]!
+  category: Category!
+  choices: [Choice!]!
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  question: String!
+  survey: Survey!
+  updatedAt: DateTime!
+}
+
+type ResultResponseType {
+  categories: [KeyStringValueIntObjectType!]!
+  level: String!
+  value: Int!
 }
 
 enum Role {
@@ -49,8 +127,18 @@ enum Role {
   USER
 }
 
+type Survey {
+  answers: [Answer!]!
+  categories: [Category!]!
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  name: String!
+  questions: [Question!]!
+  updatedAt: DateTime!
+}
+
 type User {
-  confirmed: Boolean
   createdAt: DateTime!
   email: String
   id: ID!
